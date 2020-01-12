@@ -46,9 +46,38 @@
 			}
 			return result;
 		}
-		var playerSelection = "rock";
-		var computerSelect = computerPlay();
-		console.log(playRound(playerSelection, computerSelect));
+		
+		function game() {
+			//counter for score
+			var score = 0;
+
+			for(var i = 0; i < 5; i++){
+				let playerChoice = null;
+				while(playerChoice != "rock" && playerChoice != "paper" && playerChoice != "scissors"){
+					playerChoice = window.prompt("round " + (i+1) + ": Rock, Paper or Scissors?").toLowerCase();
+				}
+				var opponentChoice = computerPlay();
+				let result = playRound(playerChoice, opponentChoice);
+				if(result == "w"){
+					score++;
+				}
+				else if(result == "l"){
+					score--;
+				}
+			}
+			
+			if(score > 0){
+				return "You Win!";
+			}
+			else if(score < 0){
+				return "You lose...";
+			}
+			else{
+				return "tie."
+			}
+
+		}
+		console.log(game());
 	</script>
 	</body>
 </html>
