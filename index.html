@@ -19,7 +19,36 @@
 			}
 		}
 		
-		
+		function playRound(playerSelection, computerSelection){
+			
+			playerSelection = playerSelection.toLowerCase();
+			computerSelection = computerSelection.toLowerCase();
+
+			let scissors = "Scissors";
+			let rock = "Rock";
+			let paper = "Paper";
+			let result;
+
+			if(playerSelection == "scissors" && computerSelection == "paper") {
+				result = "You Win! Scissors beats Paper";
+			}
+			else if(playerSelection == "paper" && computerSelection == "rock"){
+				result = "You Win! Paper beats Rock";
+			}
+			else if(playerSelection == "rock" && computerSelection == "scissors"){
+				result = "You Win! Rock beats Scissors";
+			}
+			else if(playerSelection == computerSelection){
+				result = "tie";
+			}
+			else{
+				result = "You Lose, " + computerSelection + " beats " + playerSelection;
+			}
+			return result;
+		}
+		var playerSelection = "rock";
+		var computerSelect = computerPlay();
+		console.log(playRound(playerSelection, computerSelect));
 	</script>
 	</body>
 </html>
