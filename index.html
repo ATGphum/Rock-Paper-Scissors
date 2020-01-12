@@ -30,19 +30,19 @@
 			let result;
 
 			if(playerSelection == "scissors" && computerSelection == "paper") {
-				result = "You Win! Scissors beats Paper";
+				result = "w";
 			}
 			else if(playerSelection == "paper" && computerSelection == "rock"){
-				result = "You Win! Paper beats Rock";
+				result = "w";
 			}
 			else if(playerSelection == "rock" && computerSelection == "scissors"){
-				result = "You Win! Rock beats Scissors";
+				result = "w";
 			}
 			else if(playerSelection == computerSelection){
-				result = "tie";
+				result = "t";
 			}
 			else{
-				result = "You Lose, " + computerSelection + " beats " + playerSelection;
+				result = "l";
 			}
 			return result;
 		}
