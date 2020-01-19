@@ -6,14 +6,33 @@
 		<link rel="stylesheet" href="style.css"
 	</head>
 	<body>
-		<h1>FIRST TO FIVE BABY</h1>
-		<div><p id=scoreBoard>YOU: 0 CPU: 0</p></div>	
-		<button id="rock">Rock</button>
-		<button id="paper">Paper</button>
-		<button id="scissors">Scissors</button>
-		<button id="new">New Game</button>
+		<div id=upperrow> 
+                        <p id="about">About</p> 
+                        <p id="store">Store</p> 
+                        <p id="gmail">Gmail</p> 
+                        <p id="images">Images</p> 
+                        <p id="apps">Apps</p> 
+                        <p id="sign-in">Sign in<p/> 
+                </div>
+
+		<div id=heading><img id="logo" src="googlelogo.png" alt="Google logo"><p id=rps>Rock Paper Scissors</p></div>
+
+		<div><p id=scoreBoard>YOU: 0 0 :CPU</p></div>	
+		<button class=move id="rock">Rock</button>
+		<button class=move id="paper">Paper</button>
+		<button class=move id="scissors">Scissors</button>
+		<button class=move id="new">New Game</button>
 		<div><p id=roundDisplay><br></p></div>
 		<div class="progress"></div>
+		<div id=lowerrow>
+                        <p class="lowerrow-buttons" id="advertising">Advertising</p>
+                        <p class="lowerrow-buttons" id="business">Business</p>
+                        <p class="lowerrow-buttons" id="works">How Search Works</p>
+                        <p class="lowerrow-buttons" id="privacy">Privacy</p>
+                        <p class="lowerrow-buttons" id="terms">Terms</p>
+                        <p class="lowerrow-buttons" id="settings">Settings</p>
+                </div>
+
 	<script>
 		//game variables
 		var rounds = 0;
@@ -39,7 +58,7 @@
 				reset();
 			}
 
-			choices(playerSelection.toUpperCase(), computerSelection.toUpperCase());
+			choices(playerSelection, computerSelection);
 			
 			playerSelection = playerSelection.toLowerCase();
 			computerSelection = computerSelection.toLowerCase();
@@ -75,7 +94,7 @@
 		//displays what each player chose
 		function choices(player, cpu){
 			const line = document.querySelector('#roundDisplay')
-			line.textContent = "YOU PLAYED: " + player + " THE CPU PLAYED: " + cpu;
+			line.textContent = "You played: " + player + ", whilst the cpu played: " + cpu;
 		}
 
 		//run if paper is chosen
@@ -151,7 +170,7 @@
 		//function which adds to scoreboard
 		function score(){
 			const scoreBoard = document.querySelector('#scoreBoard');
-			scoreBoard.textContent = "YOU: " + playerScore + " CPU: " + cpuScore;
+			scoreBoard.textContent = "YOU: " + playerScore + " " + cpuScore + " :CPU";
 		}
 
 		
