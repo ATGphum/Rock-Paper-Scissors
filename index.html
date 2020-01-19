@@ -3,9 +3,23 @@
 	<head>
 		<title>Rock Paper Scissors</title>
 		<meta charset="UTF-8/">
+		<link rel="stylesheet" href="style.css"
 	</head>
 	<body>
+		<h1>FIRST TO FIVE BABY</h1>
+		<div><p id=scoreBoard>YOU: 0 CPU: 0</p></div>	
+		<button id="rock">Rock</button>
+		<button id="paper">Paper</button>
+		<button id="scissors">Scissors</button>
+		<button id="new">New Game</button>
+		<div><p id=roundDisplay><br></p></div>
+		<div class="progress"></div>
 	<script>
+		//game variables
+		var rounds = 0;
+		var playerScore = 0;
+		var cpuScore = 0;
+		
 		function computerPlay(){
 			let no = Math.random();
 			if(no < 1/3){
@@ -20,6 +34,12 @@
 		}
 		
 		function playRound(playerSelection, computerSelection){
+			//reset scoreboard if a move is taken after game end
+			if(playerScore == 5 || cpuScore == 5){
+				reset();
+			}
+
+			choices(playerSelection.toUpperCase(), computerSelection.toUpperCase());
 			
 			playerSelection = playerSelection.toLowerCase();
 			computerSelection = computerSelection.toLowerCase();
@@ -30,54 +50,126 @@
 			let result;
 
 			if(playerSelection == "scissors" && computerSelection == "paper") {
+				appendProgress("You win");
 				result = "w";
 			}
 			else if(playerSelection == "paper" && computerSelection == "rock"){
+			appendProgress("You win");
 				result = "w";
 			}
 			else if(playerSelection == "rock" && computerSelection == "scissors"){
+				appendProgress("You win");
 				result = "w";
 			}
 			else if(playerSelection == computerSelection){
+				appendProgress("A tie!");
 				result = "t";
 			}
 			else{
+				appendProgress("You lost...");
 				result = "l";
 			}
-			return result;
+			game(result);
 		}
-		
-		function game() {
-			//counter for score
-			var score = 0;
 
-			for(var i = 0; i < 5; i++){
-				let playerChoice = null;
-				while(playerChoice != "rock" && playerChoice != "paper" && playerChoice != "scissors"){
-					playerChoice = window.prompt("round " + (i+1) + ": Rock, Paper or Scissors?").toLowerCase();
-				}
-				var opponentChoice = computerPlay();
-				let result = playRound(playerChoice, opponentChoice);
-				if(result == "w"){
-					score++;
-				}
-				else if(result == "l"){
-					score--;
-				}
+		//displays what each player chose
+		function choices(player, cpu){
+			const line = document.querySelector('#roundDisplay')
+			line.textContent = "YOU PLAYED: " + player + " THE CPU PLAYED: " + cpu;
+		}
+
+		//run if paper is chosen
+		var paper = document.querySelector('#paper');
+		paper.addEventListener('click', playPaper);
+
+		function playPaper(){
+			playRound("paper", computerPlay());
+		}
+
+		//run if rock is chosen
+		var rock = document.querySelector('#rock');
+		rock.addEventListener('click', playRock);
+
+		function playRock(){
+			playRound("rock", computerPlay());
+		}
+
+		var scissors = document.querySelector('#scissors');
+		scissors.addEventListener('click', playScissors);
+
+		function playScissors(){
+			playRound("scissors", computerPlay());
+		}
+	
+		var newGame = document.querySelector('#new');
+		newGame.addEventListener('click', reset);
+
+		function reset(){
+			rounds = 0;
+			playerScore = 0;
+			cpuScore = 0;
+			score();
+			const progress = document.querySelector('.progress');
+			const list = document.querySelectorAll('.newLine');
+			for(var i = 0; i < list.length; i++){
+				progress.removeChild(list[i]);
 			}
+			const line = document.querySelector('#roundDisplay')
+			line.textContent = "";
+		}
+
+		//append to progress bar
+		function appendProgress(phrase){
+			const progress = document.querySelector('.progress');
 			
-			if(score > 0){
-				return "You Win!";
+			const newLine = document.createElement('div');
+			newLine.classList.add('newLine');
+			newLine.textContent = phrase;
+
+			progress.appendChild(newLine);
+		}
+
+	
+		
+		//simulates a 5 round game
+		function game(result){
+			
+			if(result == 'w'){
+       				playerScore++;
 			}
-			else if(score < 0){
-				return "You lose...";
+			else if (result == 'l'){
+				cpuScore++;
+			}
+			score();
+
+       			rounds++;
+			if(playerScore == 5 || cpuScore == 5){
+       				winner();
+       			}	
+		}
+
+		//function which adds to scoreboard
+		function score(){
+			const scoreBoard = document.querySelector('#scoreBoard');
+			scoreBoard.textContent = "YOU: " + playerScore + " CPU: " + cpuScore;
+		}
+
+		
+
+		//declare who won
+		function winner(){
+			var phrase;
+			if(playerScore > cpuScore){
+				phrase = "You Win the ENTIRE GAME!!!";
+			}
+			else if(playerScore < cpuScore){
+				phrase = "You have lost, git gud";
 			}
 			else{
-				return "tie."
+				phrase = "heh, a tie, how could this be";
 			}
-
+			appendProgress(phrase);
 		}
-		console.log(game());
 	</script>
 	</body>
 </html>
